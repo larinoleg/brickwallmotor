@@ -21,10 +21,8 @@
                 <form method="post" class="formClass">
                     <label>Кол-во красных кирпичей: <input name="redBricks" value="" class="redInputField"></label> 
                     <label>Кол-во синих кирпичей: <input name="blueBricks" value="" class="blueInputField"></label>
-                    <!-- <input type="submit" value="Построить стену" class="submitButton"> -->
                     <input type="submit" value="Стереть стену" class="сlearButton">
                   </form>
-                  <!-- <input type="submit" value="Стереть стену" class="сlearButton"> -->
                   <div class = 'error'>
 
                   </div>
@@ -54,8 +52,6 @@
                        
                         const redValue = document.querySelector('.redInputField').value;
                         const blueValue = document.querySelector('.blueInputField').value;
-                        // const totalValue = parseInt(redValue) + parseInt(blueValue);
-                        // console.log(totalValue);
     
                         //error-handling
     
@@ -112,12 +108,12 @@
                         ctx.clearRect(0, 0, canvas.width, canvas.height);
                         pErrorText.innerText = '';
                     })
+
                     //suggested values input fields
-                    // const redInput = document.querySelector('.redInputField');
-                    // redInput.addEventListener('input', () => {
-                    //     document.querySelector('.blueInputField').value = redInput.value;
-                    // });
-                    
+                        // const redInput = document.querySelector('.redInputField');
+                        // redInput.addEventListener('input', () => {
+                        //     document.querySelector('.blueInputField').value = redInput.value;
+                        // });     
                 </script>
             </div>
             

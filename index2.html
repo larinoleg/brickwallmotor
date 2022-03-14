@@ -21,10 +21,8 @@
                 <form method="post" class="formClass">
                     <label>Кол-во красных кирпичей: <input name="redBricks" value="" class="redInputField"></label> 
                     <label>Кол-во синих кирпичей: <input name="blueBricks" value="" class="blueInputField"></label>
-                    <!-- <input type="submit" value="Построить стену" class="submitButton"> -->
                     <input type="submit" value="Стереть стену" class="сlearButton">
                   </form>
-                  <!-- <input type="submit" value="Стереть стену" class="сlearButton"> -->
                   <div class = 'error'>
 
                   </div>
@@ -57,7 +55,6 @@
                     let redBricksCountLeft = redValue;
                     let blueBricksCountLeft = blueValue;
                     const totalValue = parseInt(redValue) + parseInt(blueValue);
-                    // console.log(totalValue);
 
                     //error-handling
 
@@ -72,6 +69,7 @@
                     const height = 10;
 
                     for (let i = 1; i <= totalValue; i++) {
+                        //random probability to render red or blue
                         const randomRedOrBlue = Math.floor(Math.random() * 2);
                         if (randomRedOrBlue === 0 || blueBricksCountLeft <= 0) {
                         redBricksCountLeft -= 1;
@@ -104,14 +102,13 @@
                     }
                     });
                     //clear logic
-
                     const clearButton = document.querySelector(".сlearButton");
                     clearButton.addEventListener("click", (e) => {
-                    e.preventDefault();
-                    const canvas = document.getElementById("canvas");
-                    const ctx = canvas.getContext("2d");
-                    ctx.clearRect(0, 0, canvas.width, canvas.height);
-                    pErrorText.innerText = "";
+                        e.preventDefault();
+                        const canvas = document.getElementById("canvas");
+                        const ctx = canvas.getContext("2d");
+                        ctx.clearRect(0, 0, canvas.width, canvas.height);
+                        pErrorText.innerText = "";
                     });
                     //suggested values input fields
                     // const redInput = document.querySelector('.redInputField');
@@ -121,9 +118,6 @@
 
                 </script>
             </div>
-            
-            
-        </div>
-        
+        </div> 
     </body>
 </html>
