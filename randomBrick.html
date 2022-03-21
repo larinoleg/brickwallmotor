@@ -22,8 +22,10 @@
                 <form method="post" class="formClass">
                     <label>Ширина <input name="widthField" value="" class="widthField"></label> 
                     <label>Высота <input name="heightField" value="" class="heightField"></label>
+                    <input type="submit" value="Построить стену" class="buildButton">
                     <input type="submit" value="Стереть стену" class="сlearButton">
                   </form>
+                  <input type = "submit" value="Перерасчитать ширину стены" class="dynamicWidth">
                   <div class = 'error'>
 
                   </div>
@@ -31,23 +33,31 @@
             <canvas id="canvas" class="canvas" width="620" height="10000"></canvas>
             <div class = 'canvas'> 
                 <script>
-                    const inputField = document.querySelector(".formClass");
+
+                    const countDecimals = function(value) {
+                        if (Math.floor(value) !== value)
+                            return value.toString().split(".")[1].length || 0;
+                        return 0;
+                    }
+
+                    const buildButton = document.querySelector(".buildButton");
                     const brickCountP = document.querySelector(".brickCountP");
                     const pErrorText = document.createElement("p");
                     pErrorText.classList.add(".pError");
                     const errorForm = document.querySelector(".error");
                     errorForm.prepend(pErrorText);
+                    const dynamicWidth = document.querySelector('.dynamicWidth');
 
                     //event handler logic
-                    inputField.addEventListener("input", (e) => {
+                    buildButton.addEventListener("click", (e) => {
                     const canvas = document.getElementById("canvas");
                     const ctx = canvas.getContext("2d");
 
                     ctx.clearRect(0, 0, canvas.width, canvas.height);
                     e.preventDefault();
 
-                    const widthValue = document.querySelector(".widthField").value * 100;
-                    const heightValue = document.querySelector(".heightField").value * 100;
+                    let widthValue = document.querySelector(".widthField").value * 100;
+                    let heightValue = document.querySelector(".heightField").value * 100;
 
                     const brickWidth = 25;
                     const brickHeight = 8;
@@ -62,17 +72,27 @@
 
                     //error-handling
 
-                    isNaN(widthValue) || isNaN(heightValue) || widthValue < 0 || heightValue < 0
-                        ? (pErrorText.innerText =
-                            "Ошибка. Введеное значение не является числом или является числом отрицательным.")
-                        : (pErrorText.innerText = "");
-                    let x = -1;
+                    if (isNaN(widthValue) || isNaN(heightValue) || widthValue < 0 || heightValue < 0) {
+                        pErrorText.innerText = "Ошибка. Введеное значение не является числом или является числом отрицательным.";
+                        document.querySelector(".widthField").value = 1;
+                        document.querySelector(".heighthField").value = 1;
+                        widthValue = 1;
+                        heightValue = 1;                    }
+                    else {
+                        pErrorText.innerText = "";
+                    }
+
+                    if (countDecimals(widthValue/100) > 2 || countDecimals(heightValue/100) > 2) {
+                        pErrorText.innerText = "Ошибка. Введеное значение меньше существующей метрики";
+                    }
+                    else {
+                        let x = 1; //change to -1
                     let y = 10;
                     let k = 1;
                     let brickWidthHalf = brickWidth / 2;
                     let heightUsed = brickHeight + 2;
 
-                    //rendring cycle
+                    //rendering cycle
 
                     for (let i = 1; i <= wallArea; i++) {
                         ctx.lineWidth = 1;
@@ -92,14 +112,14 @@
                                 return true;
                             }
 
-                            x = -1;
+                            x = 1;
                             y += brickHeight + 2;
                             k += 1;
 
                             if (k % 2 == 0) {
                                 ctx.fillRect(x, y, brickWidth / 2, brickHeight);
                                 ctx.strokeRect(x, y, brickWidth / 2, brickHeight);
-                                x += brickWidth / 2 + 2;
+                                x += brickWidth / 2 + 1;
                             } else {
                                 ctx.fillRect(x, y, brickWidth, brickHeight);
                                 ctx.strokeRect(x, y, brickWidth, brickHeight);
@@ -114,7 +134,22 @@
 
                         brickCount += 1;
                     }
+                    }
+
+
+                    
                     });
+
+                    dynamicWidth.addEventListener('click', () => {
+                        let widthValue = document.querySelector(".widthField").value * 100;
+                        if (widthValue % 27 < 13 && widthValue % 27 !== 0) {
+                            while (widthValue % 27 !== 0) {
+                                widthValue += 1;
+                        }
+                        document.querySelector(".widthField").value = (widthValue/100);
+                        widthValue = document.querySelector('.widthField').value * 100;
+                    }
+                    })
 
                     // clear logic
 

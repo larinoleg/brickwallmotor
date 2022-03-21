@@ -29,13 +29,17 @@ p {
 }
 
 .submitButton,
-.сlearButton {
+.сlearButton,
+.dynamicWidth,
+.buildButton {
   width: 20em;
   background-color: #fff;
 }
 
 .submitButton:hover,
-.сlearButton:hover {
+.сlearButton:hover,
+.dynamicWidth:hover,
+.buildButton:hover {
   background-color: #111;
   color: #fff;
 }
