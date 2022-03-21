@@ -31,7 +31,6 @@
             <canvas id="canvas" class="canvas" width="620" height="10000"></canvas>
             <div class = 'canvas'> 
                 <script>
-                    
                     const inputField = document.querySelector(".formClass");
                     const brickCountP = document.querySelector(".brickCountP");
                     const pErrorText = document.createElement("p");
@@ -43,26 +42,24 @@
                     inputField.addEventListener("input", (e) => {
                     const canvas = document.getElementById("canvas");
                     const ctx = canvas.getContext("2d");
-                    
+
                     ctx.clearRect(0, 0, canvas.width, canvas.height);
                     e.preventDefault();
-                  
 
                     const widthValue = document.querySelector(".widthField").value * 100;
                     const heightValue = document.querySelector(".heightField").value * 100;
 
-                    const brickWidth = 24 ;
-                    const brickHeight = 8 ;
+                    const brickWidth = 25;
+                    const brickHeight = 8;
 
                     canvas.height = heightValue + 30;
                     canvas.width = widthValue;
                     const wallArea = widthValue * heightValue;
                     const fullBrickWidth = brickWidth + 2;
-
                     const fullBrickArea = (brickWidth + 2) * (brickHeight + 2);
 
                     let brickCount = 0;
-                   
+
                     //error-handling
 
                     isNaN(widthValue) || isNaN(heightValue) || widthValue < 0 || heightValue < 0
@@ -74,64 +71,60 @@
                     let k = 1;
                     let brickWidthHalf = brickWidth / 2;
                     let heightUsed = brickHeight + 2;
-                  
+
+                    //rendring cycle
 
                     for (let i = 1; i <= wallArea; i++) {
+                        ctx.lineWidth = 1;
+                        ctx.strokeStyle = "#00bd3f";
+                        const colorRandom = Math.ceil(Math.random() * 100);
+                        colorRandom < 50
+                        ? (ctx.fillStyle = "#cc2b0e")
+                        : (ctx.fillStyle = "#0e60cc");
 
-                            ctx.lineWidth = 1;
-                            ctx.strokeStyle = '#00bd3f';
-                            const colorRandom = Math.ceil(Math.random() * 100);
-                            (colorRandom < 50) ?
-                            ctx.fillStyle = '#cc2b0e':  
-                            ctx.fillStyle = '#0e60cc';
-                        
-                            if (x > widthValue) {
+                        if (x > widthValue) {
+                        heightUsed += brickHeight + 2;
 
-                                heightUsed += brickHeight + 2;
-
-                                if ( (heightUsed === heightValue) & (x > widthValue) ) {
-                                    i = wallArea;
-                                    console.log(brickCount);
-                                    brickCountP.textContent = `Кол-во кирпичей: ${brickCount}`;
-                                    return true;
-                                }
-
-                                x = -1;
-                                y += brickHeight + 2;
-                                k += 1;
-                            
-
-                                if (k % 2 == 0) {
-                                    ctx.fillRect(x, y, brickWidth/2, brickHeight);
-                                    ctx.strokeRect(x, y, brickWidth/2, brickHeight);
-                                    x += brickWidth/2 + 2;
-                                }
-                                else {
-                                    ctx.fillRect(x, y, brickWidth, brickHeight);
-                                    ctx.strokeRect(x, y, brickWidth, brickHeight);
-                                    x += fullBrickWidth;
-                                }
-
+                            if ((heightUsed === heightValue) & (x > widthValue)) {
+                                i = wallArea;
+                                console.log(brickCount);
+                                brickCountP.textContent = `Кол-во кирпичей: ${brickCount}`;
+                                return true;
                             }
-                            else {
+
+                            x = -1;
+                            y += brickHeight + 2;
+                            k += 1;
+
+                            if (k % 2 == 0) {
+                                ctx.fillRect(x, y, brickWidth / 2, brickHeight);
+                                ctx.strokeRect(x, y, brickWidth / 2, brickHeight);
+                                x += brickWidth / 2 + 2;
+                            } else {
                                 ctx.fillRect(x, y, brickWidth, brickHeight);
-                                ctx.strokeRect(x, y, brickWidth, brickHeight);   
-                                x += fullBrickWidth;  
-                                }   
-                                
-                            brickCount += 1; 
+                                ctx.strokeRect(x, y, brickWidth, brickHeight);
+                                x += fullBrickWidth;
+                            }
+                        } 
+                        else {
+                            ctx.fillRect(x, y, brickWidth, brickHeight);
+                            ctx.strokeRect(x, y, brickWidth, brickHeight);
+                            x += fullBrickWidth;
                         }
-                       
-                        
+
+                        brickCount += 1;
+                    }
                     });
-                    //clear logic
+
+                    // clear logic
+
                     const clearButton = document.querySelector(".сlearButton");
                     clearButton.addEventListener("click", (e) => {
-                        e.preventDefault();
-                        const canvas = document.getElementById("canvas");
-                        const ctx = canvas.getContext("2d");
-                        ctx.clearRect(0, 0, canvas.width, canvas.height);
-                        pErrorText.innerText = "";
+                    e.preventDefault();
+                    const canvas = document.getElementById("canvas");
+                    const ctx = canvas.getContext("2d");
+                    ctx.clearRect(0, 0, canvas.width, canvas.height);
+                    pErrorText.innerText = "";
                     });
                 </script>
             </div>
