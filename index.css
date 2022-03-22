@@ -19,7 +19,9 @@
 h1 {
   margin-bottom: 10px;
 }
-p {
+.pWarning {
+  width: 35em;
+  font-size: 6pt;
   margin-top: 0px;
 }
 .formClass {
@@ -31,7 +33,8 @@ p {
 .submitButton,
 .сlearButton,
 .dynamicWidth,
-.buildButton {
+.buildButton,
+.redDynamic {
   width: 20em;
   background-color: #fff;
 }
@@ -42,6 +45,10 @@ p {
 .buildButton:hover {
   background-color: #111;
   color: #fff;
+}
+
+.redDynamic {
+  color: brown;
 }
 
 .error {
